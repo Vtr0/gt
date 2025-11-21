@@ -56,14 +56,18 @@ git branch -a
 # First, find the commit hash:
 git log -- path/to/file
 
-# ✅ Then restore the file (but keep the change staged):
+# ✅ Then restore the file (but keep the change staged). Note that <commit-hash> can be just some few chars of the full hash (say 6 chars):
 git restore --source <commit-hash> path/to/file
 # This places the old version in your working directory.
 
 # ✅ Restore a file to a previous commit and stage the change
 git restore --source <commit-hash> --staged path/to/file
 
-#After reviewing the restored file, commit it:
+# After reviewing the restored file, commit it to the remote repository:
 git add path/to/file
 git commit -m "Revert file to version from <commit-hash>"
+# and finally push it into remote repo
+
+# Short-way for above 3 commands:
+git commit -am "Your commit message" && git push
 ```
