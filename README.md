@@ -21,6 +21,13 @@ git config --global -e
 ```
 
 ## Working with GIT
+
+### Check git status
+```
+# check status, see if any tracked file modified, on staging area
+git status [file_name] [--graph]
+```
+
 ### Clone remote repository into local repository
 ```
 # create a local repo
@@ -31,8 +38,11 @@ git clone "https://github.com/Vtr0/gt/"
 ```
 # create a local repo
 git init
-# switch to branch "readme"
+# add README.md to staging area
 git add README.md
+# remove README.md out of staging area
+git reset README.md
+# commit to local repository
 git commit -m "Initial commit"
 # connect with remote repository
 git remote add origin "https://github.com/Vtr0/gt"
@@ -52,7 +62,7 @@ git checkout -b <new_branch>
 # or more recently
 git switch -c <new-branch-name>
 
-# see local and remote branch
+# see local and remote branch (-r to see only remote branch)
 git branch -a
 ```
 ### Adding new file to new branch
