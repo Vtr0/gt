@@ -1,7 +1,6 @@
 # GT
 ## Git setup
 
-## Working with GIT
 ```
 # setup name and email
 git config --global user.name "vtr0"
@@ -17,6 +16,7 @@ git config --global core.editor "code --wait"
 git config --global -e
 ```
 
+## Working with GIT
 ### Clone remote repository into local repository
 ```
 # create a local repo
