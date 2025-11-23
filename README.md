@@ -154,7 +154,11 @@ git commit -am "Your commit message" && git push
 > [SuperSimpleDev - Branchng and Merging](https://www.youtube.com/watch?v=Q1kHG842HoI)  
 > [SuperSimpleDev - Git cheatsheet - PDF](https://supersimpledev.github.io/references/git-github-reference.pdf)  
 
-[FreeCodeCamp - Crash Course](https://www.youtube.com/watch?v=RGOj5yH7evk)
+[FreeCodeCamp - Crash Course](https://www.youtube.com/watch?v=RGOj5yH7evk)  
+
+[FreeCodeCamp - Learn Git – Full Course for Beginners](https://www.youtube.com/watch?v=zTjRZNkhiEU)  
+
+[JavaScript Mastery - Visualized Git Course](https://www.youtube.com/watch?v=S7XpTAnSDL4)
 # GIT scheme
 [ByteByteGo - Git scheme](https://www.youtube.com/watch?v=e9lnsKot_SQ)
 
