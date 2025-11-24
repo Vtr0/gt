@@ -165,6 +165,16 @@ git restore --source=<branch_name> <file_name>
 
 # similar to old git-checkout, git-reset
 ```
+## Git cheatsheet and pdf
+* [gitHub](https://education.github.com/git-cheat-sheet-education.pdf)
+* [gitHub-Train](https://training.github.com/downloads/github-git-cheat-sheet.pdf)
+* [SuperSimpleDev - Git cheatsheet - PDF](https://supersimpledev.github.io/references/git-github-reference.pdf)  
+* [Neu - slide](https://course.ccs.neu.edu/cs4500sp18/ssl/pdf/020-git-short.pdf)
+* [Standford](https://web.stanford.edu/class/cs124/lec/git_tutorial.pdf): has some pratice activities
+* [Washington Univ](https://eecs.wsu.edu/~aofallon/GitGuide.pdf)  
+* [Utah Univ](https://groundwater.usu.edu/assets/pdf/How_to_Git.pdf)  
+* [John Mathew](https://johnmathews.is/documents/Rys-Git-Tutorial.pdf): extensive long guide
+
 ## Git Youtube resource
 [Mosh - Learn Git in 1 Hour](https://www.youtube.com/watch?v=8JJ101D3knE)  
 [Tôi Đi Code Dạo](https://www.youtube.com/watch?v=1JuYQgpbrW0) - [Slide](https://docs.google.com/presentation/d/12i4myOgbukiXtX185Kir1qE2SXIpcrd6uik4wJL_KjU/edit?slide=id.p4#slide=id.p4)
@@ -173,7 +183,6 @@ git restore --source=<branch_name> <file_name>
 > [SuperSimpleDev - Git and GitHub - Part 1](https://www.youtube.com/watch?v=hrTQipWp6co)  
 > [SuperSimpleDev - Git and GitHub - Part 2](https://www.youtube.com/watch?v=1ibmWyt8hfw) - Deeper on git. Also there is instruction about  Personal Access Token, SSH-key  
 > [SuperSimpleDev - Branchng and Merging](https://www.youtube.com/watch?v=Q1kHG842HoI)  
-> [SuperSimpleDev - Git cheatsheet - PDF](https://supersimpledev.github.io/references/git-github-reference.pdf)  
 
 ### FreeCodeCamp
 > [FreeCodeCamp - Crash Course](https://www.youtube.com/watch?v=RGOj5yH7evk)  
