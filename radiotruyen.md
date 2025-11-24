@@ -4,7 +4,8 @@
 Paste above code into following page to create bookmarklet for copying url of 
 Open [https://caiorss.github.io/bookmarklet-maker/](https://caiorss.github.io/bookmarklet-maker/)
 
-##Code to get whole or part of playlist start from current item (so should start from item 1)
+## Code to get whole or part of playlist start from current item (so should start from item 1)
+```markdown
 ```javascript
 const statBar = document.querySelector('h4');
 statBar.style.color = "red";
@@ -58,6 +59,7 @@ async function run() {
 }
 
 run();
+```
 ```
 
 ## bookmarklet code after generated
