@@ -48,7 +48,7 @@ pause
 
 # GET DURATION FOR ALL MP3 FILES
 
-## Using batch file
+## Using batch file to get duration for REMOTE mp3 links
 grab_dur.bat will get durations of all url stored in "input.txt" and save to "output.txt"
 Note that this using Curl and ffprobe (which part of ffmpeg - can install by "winget install ffmpeg")
 Install Curl: winget install curl
@@ -133,7 +133,7 @@ pause
 {"tit": "121.mp3", "dur": "48:59"},
 ```
 
-## Using python
+## Using python to get duration for LOCAL mp3 files
 Using python to get the duration of all mp3 files in the same folder
 
 __Requirement__  
@@ -142,7 +142,7 @@ we need Mutagen - which is a Python library used for handling audio metadata, al
 pip install mutagen
 ```
 
-### python file
+### Python code file
 `get_dur.py`
 ```python
 import os
