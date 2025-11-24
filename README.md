@@ -3,7 +3,7 @@
 
 ## Git setup
 ```batch
-# run following command or put it in the batch file in the working durectory to start bash-git from that directory (save some cd command). Note that there is no " at the end
+rem run following command or put it in the batch file in the working durectory to start bash-git from that directory (save some cd command). Note that there is no " at the end
 "C:\Program Files\Git\git-bash.exe" --cd=.\
 ```
 
