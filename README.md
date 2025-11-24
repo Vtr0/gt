@@ -170,6 +170,7 @@ git restore --source=<branch_name> <file_name>
 * [gitHub](https://education.github.com/git-cheat-sheet-education.pdf)
 * [gitHub-Train](https://training.github.com/downloads/github-git-cheat-sheet.pdf)
 * [SuperSimpleDev - Git cheatsheet - PDF](https://supersimpledev.github.io/references/git-github-reference.pdf)  
+
 **Guides** 
 * [Neu - slide](https://course.ccs.neu.edu/cs4500sp18/ssl/pdf/020-git-short.pdf)
 * [Standford](https://web.stanford.edu/class/cs124/lec/git_tutorial.pdf): has some pratice activities
