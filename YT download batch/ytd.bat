@@ -24,25 +24,24 @@ if errorlevel 1 (
 
 REM ===== CHOOSE BITRATE =====
 :: Display bitrate options
-echo.
+echo ---------------------------------------
 echo Choose the desired audio bitrate (default is 192 kbps):
 echo 1. 64 kbps
 echo 2. 128 kbps
 echo 3. 192 kbps (default)
 echo 4. 256 kbps
 echo 5. 320 kbps
-echo.
+echo ---------------------------------------
 
 :: Ask user for choice
 set /p choice=Enter your choice (1/2/3/4/5) or press Enter to use the default: 
 
 :: Map the choice to the corresponding bitrate or use default (192)
-set BITRATE=192
-if "%choice%"=="1" set BITRATE=64
-if "%choice%"=="2" set BITRATE=128
-if "%choice%"=="4" set BITRATE=256
-if "%choice%"=="5" set BITRATE=320
-
+set "BITRATE=192k"
+if "%choice%"=="1" set "BITRATE=64k"
+if "%choice%"=="2" set "BITRATE=128k"
+if "%choice%"=="4" set "BITRATE=256k"
+if "%choice%"=="5" set "BITRATE=320k"
 :: Inform user of the selected bitrate
 echo Downloading audio are all set at bitrate of %BITRATE% kbps...
 
