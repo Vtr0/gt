@@ -224,9 +224,56 @@ cls
 echo === Playlist MP3 Download ===
 set /p PLAYLIST_URL="Enter YouTube playlist URL: "
 
+:: -----------------------
+:: Ask for Start Index
+:: -----------------------
+set "PL_DEFAULT_START=1"
+set /p PL_USER_START="Enter start index (default %PL_DEFAULT_START%):" 
+
+:: Validate numeric
+set /a pl_start_test=!PL_DEFAULT_START! >nul 2>nul
+if errorlevel 1 (
+    echo Invalid input. Using default start index: !PL_DEFAULT_START!
+    set "PL_START_INDEX=!PL_DEFAULT_START!"
+) else (
+    set "PL_START_INDEX=!PL_USER_START!"
+)
+echo Start index chosen = !PL_START_INDEX!
+
+:: -----------------------
+:: Ask for End Index
+:: -----------------------
+set /p PL_USER_END="Enter end index (default: last item):" 
+
+:: Validate numeric
+set /a pl_end_test=!PL_USER_END! >nul 2>nul
+if errorlevel 1 (
+    echo No valid end index provided. Using last item in playlist.
+    set "PL_END_INDEX="
+) else (
+    set "PL_END_INDEX=!PL_USER_END!"
+)
+echo End index chosen = !PL_END_INDEX!
+
+:: -----------------------
+:: Build yt-dlp options for start/end index
+:: -----------------------
+set "PL_RANGE_OPT="
+if defined PL_START_INDEX (
+    set "PL_RANGE_OPT=--playlist-start !PL_START_INDEX!"
+)
+if defined PL_END_INDEX (
+    set "PL_RANGE_OPT=!PL_RANGE_OPT! --playlist-end !PL_END_INDEX!"
+)
+:: Padding size fixed at 2 for now (may add code for user input later)
+set PL_PADDING_DIGITS=2
+
+:: -----------------------
+:: Download playlist
+:: -----------------------
 yt-dlp -x --audio-format mp3 --audio-quality %BITRATE% ^
     --embed-metadata --embed-thumbnail --add-metadata ^
-    -o "%DOWNLOAD_DIR%\%%(playlist_index)s - %%(title)s.%%(ext)s" %PLAYLIST_URL%
+    -o "%DOWNLOAD_DIR%\%%(playlist_index)0!PL_PADDING_DIGITS!d - %%(title)s.%%(ext)s" !PL_RANGE_OPT! %PLAYLIST_URL%
 
 echo.
 echo ✅ Playlist download complete.

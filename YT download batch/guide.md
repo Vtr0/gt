@@ -59,7 +59,13 @@ https://www.youtube.com/watch?v=eBaGlo1b3ZY
 Other user choice the same as for single download
 
 ### 📂 Download an Entire Playlist as MP3
-Download entire playlist with index at beginning of filename. The code to download as follows
+Download entire playlist with index at beginning of filename.
+You will be asked to type in `start index` (default `1`) and `end index` (default the very last video of the playlist)
+
+you mighr modify following code to increase the `padding size`
+```batch
+set PL_PADDING_DIGITS=2
+```
 
 ## Code customization
 ### 🎯 Set Download Directory
@@ -129,7 +135,7 @@ Go to [Output template](https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#outp
 Here's the typical mapping for MP3 VBR quality settings (`--audio-quality` 0 to 9):
 
 `--audio-quality`: Approximate Bitrate	Description
-| Value | Bitrate     | Quality           |
+| Value | Bitrate    | Quality            |
 |-------|------------|--------------------|
 | 0     | ~245 kbps  | Highest quality    |
 | 1     | ~225 kbps  | Very high quality  |
