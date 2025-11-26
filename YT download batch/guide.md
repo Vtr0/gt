@@ -81,8 +81,8 @@ With mode [2], you have to type in the `start index` and `padding size`, for exa
 006 - MXZI, sk3tch01, X972 - Montagem Toma ｜ Funk ｜ NCS - Copyright Free Music.mp3
 ```
 
-### 🔁 Batch Download Using a urls.txt File
-urls.txt Example:
+### 🔁 Batch Download Using a `urls.txt` File
+Example of a `urls.txt	 file:
 ```makefile
 https://www.youtube.com/watch?v=VIDEO_ID1
 https://www.youtube.com/watch?v=VIDEO_ID2
