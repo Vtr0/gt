@@ -1,4 +1,6 @@
+```javascript
 c="", $0.querySelectorAll("a").forEach(m=> {c+="\"" + decodeURI(m.href) + "\",\n"});copy(c)
+```
 
 ## Handy functions
 ### make 10 unique book Id

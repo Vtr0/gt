@@ -1,4 +1,4 @@
-# INSTALL
+# Install dependencies
 ### ✅ Prerequisites
 
 Ensure yt-dlp is installed and updated, and ffmpeg is available in your system's PATH.
@@ -24,8 +24,44 @@ If somehow `yt-dlp` fails to download mp3, you should upgrade it.
 
 ## Guide
 
-### Bitrate menu
+### Choose general settings
+### id3 tag
+Choose to add id3 tag to output mp3 files or not
+### Output filename format
+Choose the basic filename format, as in follows menu
+```makefile
+---------------------------------------
+Choose the desired filename format (default is option 1):
+1. <title>.<ext> (default)
+2. <artist> - <title>.<ext>
+3. <title> - [<id>].<ext>
+4. <title> - [<duration>].<ext>
+5. <artist> - <title> - [<duration>].<ext>
+---------------------------------------
+```
+
+#### Bitrate menu
 First, you should choose the bitrate from 64kbps, 128kbps, 192kbps (default), 256kbps, 320kbps
+
+Ater choosing some general setting, we will have a menu as follows
+```makefile
+---------------------------------------
+YouTube to MP3 Downloader
+---------------------------------------
+Settings:
+  Download Directory: "C:\youtbe-MP3"
+  Embed ID3 Metadata: "Yes"
+  Filename Format: "%%(title)s - [%%(id)s].%%(ext)s"
+  Audio Bitrate: "192kbps"
+---------------------------------------
+Select download mode:
+  [1] Download single videos (loop)
+  [2] Download from urls.txt
+  [3] Download playlist
+  [4] Exit
+---------------------------------------
+Choose an option (1-4): 
+```
 
 ### Choose mode to download
 ### 🔽 Single file mode
@@ -62,10 +98,20 @@ Other user choice the same as for single download
 Download entire playlist with index at beginning of filename.
 You will be asked to type in `start index` (default `1`) and `end index` (default the very last video of the playlist)
 
-you mighr modify following code to increase the `padding size`
-```batch
-set PL_PADDING_DIGITS=2
+Then you have to set the `padding size`  
+
+Finally, choose the style for `ordinal` indexed number at the start of filename.
+```makefile
+[1] Use default filenames <-- no ordinal number
+[2] Use indexed filenames (Index of the video in the playlist) <-- use the index of video in Playlist to be the ordinal
+[3] Use indexed filenames (Position of the video in the playlist download queue) <-- Use the position of downloaded mp3 file. So the video item number 4 in playlist can be set the ordinal of '01' if it is the first items being choosen to download
+Choose filename indexed style (1-3): 
 ```
+
+Each option using following parameter of `yt-dlp`:
+* [1]: use nothing
+* [2]: using the parameter `playlist_index` (numeric): Index of the video in the playlist padded with leading zeros according the final index
+* [3]: using the parameter `playlist_autonumber` (numeric): Position of the video in the playlist download queue padded with leading zeros according to the total length of the playlist
 
 ## Code customization
 ### 🎯 Set Download Directory
@@ -79,7 +125,7 @@ Following to Download One (or few youtube video whose url separate by a space) Y
 ```batch
 yt-dlp -x --audio-format mp3 --audio-quality 192 ^
 	--embed-metadata --embed-thumbnail --add-metadata ^
-	-o "%DOWNLOAD_DIR%\%%(autonumber+!SG_START_INDEX!)0!SG_PAD_SIZE!d - %%(title)s.%%(ext)s" %PLAYLIST_URL%
+	-o "%DOWNLOAD_DIR%\%%(autonumber+!SG_START_INDEX!)0!SG_PAD_SIZE!d - %%(title)s.%%(ext)s" %VIDEO_URL%
 ```
 
 Explanation of Key Options:
@@ -98,7 +144,7 @@ Explanation of Key Options:
 	* `%%(title)s` → the placeholder to be filled with `video title` from id3 tag.
 	* `%%(ext)s` → file extension (mp3 after extraction). Similarly as `%%(title)s`
 	* May add  `-o "thumbnail:%%(title)s\%%(title)s.%%(ext)s"` will put the thumbnails in a folder with the same name as the video
-* `%PLAYLIST_URL%` This is the playlist or video URL (batch variable) that yt-dlp will download. Can be a single video, list of videos separated by a space, the text file that contains all video links (each in one line), or playlist.
+* `%VIDEO_URL%` This is the playlist or video URL (batch variable) that yt-dlp will download. Can be a single video, list of videos separated by a space, the text file that contains all video links (each in one line), or playlist.
 
 Example output:
 ```makefile

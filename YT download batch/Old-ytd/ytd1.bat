@@ -26,36 +26,12 @@ REM ===== CHOOSE IF EMBBED ID3 TAG TO OUTPUT MP3 =====
 set /p EMBBED_ID3_ENABLED="Embed ID3 metadata? [Y/n]: "
 :: Use first character only
 set "EMBBED_ID3_ENABLED=!EMBBED_ID3_ENABLED:~0,1!"
-:: default to Y if empty
-set "EMBBED_ID3_CMD=--embed-metadata --embed-thumbnail --add-metadata "
+
 if /I "!EMBBED_ID3_ENABLED!"=="N" (
     set "EMBBED_ID3_CMD="
+) else  (
+    set "EMBBED_ID3_CMD=--embed-metadata --embed-thumbnail --add-metadata "
 )
-::echo ID3 embedding is set to: !EMBBED_ID3_CMD!
-
-REM ===== CHOOSE OUTPUT FILENAME FORMAT =====
-:: Display bitrate options
-echo ---------------------------------------
-echo Choose the desired filename format (default is option 1):
-echo 1. ^<title^>.^<ext^> (default)
-echo 2. ^<artist^> - ^<title^>.^<ext^>
-echo 3. ^<title^> - [^<id^>].^<ext^>
-echo 4. ^<title^> - [^<duration^>].^<ext^>
-echo 5. ^<artist^> - ^<title^> - [^<duration^>].^<ext^>
-echo ---------------------------------------
-
-:: Ask user for choice
-set /p fname_format_choice="Enter your choice (1/2/3/4) or press Enter to use the default: "
-
-:: Map the choice to the corresponding bitrate or use default (192)
-set "FNAME_FORMAT=%%(title)s.%%(ext)s"
-:: %%(artist)s - %%(title)s.%%(ext)s
-if "%fname_format_choice%"=="2" set "FNAME_FORMAT=%%(uploader)s - %%(title)s.%%(ext)s"
-if "%fname_format_choice%"=="3" set "FNAME_FORMAT=%%(title)s - [%%(id)s].%%(ext)s"
-if "%fname_format_choice%"=="4" set "FNAME_FORMAT=%%(title)s - [%%(duration_string)s].%%(ext)s"
-if "%fname_format_choice%"=="5" set "FNAME_FORMAT=%%(uploader)s - %%(title)s - [%%(duration_string)s].%%(ext)s"
-:: Inform user of the selected format
-echo Output mp3 filename has format of %FNAME_FORMAT% ...
 
 REM ===== CHOOSE BITRATE =====
 :: Display bitrate options
@@ -86,21 +62,10 @@ cls
 echo ---------------------------------------
 echo YouTube to MP3 Downloader
 echo ---------------------------------------
-echo Settings:
-echo   Download Directory: "%DOWNLOAD_DIR%"
-if defined EMBBED_ID3_CMD (
-    echo   Embed ID3 Metadata: "Yes"
-) else (
-    echo   Embed ID3 Metadata: "No"
-)
-echo   Filename Format: "%FNAME_FORMAT%"
-echo   Audio Bitrate: "%BITRATE%bps"
-echo ---------------------------------------
-echo Select download mode:
-echo   [1] Download single videos (loop)
-echo   [2] Download from urls.txt
-echo   [3] Download playlist
-echo   [4] Exit
+echo [1] Download single videos (loop)
+echo [2] Download from urls.txt
+echo [3] Download playlist
+echo [4] Exit
 echo ---------------------------------------
 set /p choice="Choose an option (1-4): "
 
@@ -126,7 +91,7 @@ set /p sg_index_choice="Choose filename style (1-2): "
 if "%sg_index_choice%"=="1" (
     yt-dlp -x --audio-format mp3 --audio-quality %BITRATE% ^
         !EMBBED_ID3_CMD! ^
-        -o "%DOWNLOAD_DIR%\!FNAME_FORMAT!" %VIDEO_URL%
+        -o "%DOWNLOAD_DIR%\%%(title)s.%%(ext)s" %VIDEO_URL%
 ) else (
     rem ----------------------------
     rem Ask for start index
@@ -206,7 +171,7 @@ if "%index_choice%"=="1" (
     rem Start batch download with indexing
     rem ----------------------------
     yt-dlp -x --audio-format mp3 --audio-quality %BITRATE% ^
-        !EMBBED_ID3_CMD! ^
+        --embed-metadata --embed-thumbnail --add-metadata ^
         -o "%DOWNLOAD_DIR%\%%(autonumber+!START_INDEX!)0!PAD_SIZE!d - %%(title)s.%%(ext)s" -a "%URL_LINKS_FILE%"
 )
 echo.
@@ -255,30 +220,13 @@ CALL :GetUserInputNumber "Enter Padding size (number), default 2 (1 becomes 01):
 SET PL_PADDING_DIGITS=!ERRORLEVEL!
 echo Padding size chosen = !PL_PADDING_DIGITS!
 
-rem ----------------------------
-rem Ask for using ordinal indexed filename
-rem ----------------------------
-echo .
-echo [1] Use default filenames
-echo [2] Use indexed filenames (Index of the video in the playlist)
-echo [3] Use indexed filenames (Position of the video in the playlist download queue)
-set /p pl_index_choice="Choose filename indexed style (1-3): "
-
-set "PL_ORDINAL="
-if "%pl_index_choice%"=="2" (
-    set "PL_ORDINAL=%%(playlist_index)0!PL_PADDING_DIGITS!d - "
-) 
-if "%pl_index_choice%"=="3" (
-    set "PL_ORDINAL=%%(playlist_autonumber)0!PL_PADDING_DIGITS!d - "
-) 
 :: -----------------------
 :: Download playlist
 :: -----------------------
 yt-dlp -x --audio-format mp3 --audio-quality %BITRATE% ^
-    !EMBBED_ID3_CMD! ^
-    -o "%DOWNLOAD_DIR%\!PL_ORDINAL!%%(title)s.%%(ext)s" !PL_RANGE_OPT! %PLAYLIST_URL%
+    --embed-metadata --embed-thumbnail --add-metadata ^
+    -o "%DOWNLOAD_DIR%\%%(playlist_index)0!PL_PADDING_DIGITS!d - %%(title)s.%%(ext)s" !PL_RANGE_OPT! %PLAYLIST_URL%
 
-:: %%(playlist_index)0!PL_PADDING_DIGITS!d
 echo.
 echo ✅ Playlist download complete.
 pause

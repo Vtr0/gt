@@ -255,30 +255,13 @@ CALL :GetUserInputNumber "Enter Padding size (number), default 2 (1 becomes 01):
 SET PL_PADDING_DIGITS=!ERRORLEVEL!
 echo Padding size chosen = !PL_PADDING_DIGITS!
 
-rem ----------------------------
-rem Ask for using ordinal indexed filename
-rem ----------------------------
-echo .
-echo [1] Use default filenames
-echo [2] Use indexed filenames (Index of the video in the playlist)
-echo [3] Use indexed filenames (Position of the video in the playlist download queue)
-set /p pl_index_choice="Choose filename indexed style (1-3): "
-
-set "PL_ORDINAL="
-if "%pl_index_choice%"=="2" (
-    set "PL_ORDINAL=%%(playlist_index)0!PL_PADDING_DIGITS!d - "
-) 
-if "%pl_index_choice%"=="3" (
-    set "PL_ORDINAL=%%(playlist_autonumber)0!PL_PADDING_DIGITS!d - "
-) 
 :: -----------------------
 :: Download playlist
 :: -----------------------
 yt-dlp -x --audio-format mp3 --audio-quality %BITRATE% ^
     !EMBBED_ID3_CMD! ^
-    -o "%DOWNLOAD_DIR%\!PL_ORDINAL!%%(title)s.%%(ext)s" !PL_RANGE_OPT! %PLAYLIST_URL%
+    -o "%DOWNLOAD_DIR%\%%(playlist_index)0!PL_PADDING_DIGITS!d - %%(title)s.%%(ext)s" !PL_RANGE_OPT! %PLAYLIST_URL%
 
-:: %%(playlist_index)0!PL_PADDING_DIGITS!d
 echo.
 echo ✅ Playlist download complete.
 pause
