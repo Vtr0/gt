@@ -1,17 +1,17 @@
 # MINIFIER & OBFUSCATOR (using tool noted with * )
 
 **I am using**
-- JS:* **https://uglifyjs.net** (check 'Mangle names', 'Mangle function names')
-- CSS: * **https://cssnano.github.io/cssnano/playground/** (Use Preset Default)  
+- `JS`:* **https://uglifyjs.net** (check 'Mangle names', 'Mangle function names')
+- `CSS`: * **https://cssnano.github.io/cssnano/playground/** (Use Preset Default)  
 	http://css.github.io/csso/csso.html
 
-- HTML + SVG minifier * **https://codebeautify.org/minify-html**  
+- `HTML` + `SVG` minifier * **https://codebeautify.org/minify-html**  
 
 **Others**
-- HTML+CSS+JS: https://htmlcompressor.com  
+- `HTML`+`CSS`+`JS`: https://htmlcompressor.com  
 	https://refresh-sf.com
-- Html (node JS): https://github.com/kangax/html-minifier?tab=readme-ov-file
-- CSS+JS (jar app): https://developers.google.com/closure
+- `Html` (node JS): https://github.com/kangax/html-minifier?tab=readme-ov-file
+- `CSS`+`JS` (jar app): https://developers.google.com/closure
 	UI online: http://closure-compiler.appspot.com
 
 **Best minifier review:**  
