@@ -43,7 +43,7 @@ OR more extensively (but may cause flaws), replace following (in Regular express
 "([^\"]+)":
 ```
 ## Edit file `shortcuts.xml`
-Macros of `Notepad++` saved at file `shortcuts.xml` in folder `%AppData%\Notepad++`.  
+In WinOS, macro(s) of `Notepad++` saved at file `shortcuts.xml` in folder `%AppData%\Notepad++`.  
 You can add following code the the `shortcuts.xml` file, to have `REMOVE style script TAG` and `Trim name of Database` available in `Notepad++`'s `Macros` menu
 ```xml
     <Macros>
