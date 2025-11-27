@@ -165,6 +165,45 @@ git restore --source=<branch_name> <file_name>
 
 # similar to old git-checkout, git-reset
 ```
+## Compare
+### Compare file
+#### Compare a File in Your Local Repository with Remote
+Before you compare the file, make sure you have the latest changes from the remote repository. This will ensure that your comparison is accurate.
+```bash
+git fetch origin
+```
+If you want to compare a file (e.g., file.txt) in your local repository with the version of the file in the remote branch (e.g., origin/main), you can use the following command:
+```bash
+git diff origin/main -- path/to/your/file.txt
+```
+Where
+* `origin/main`: Refers to the remote branch (e.g., main) as it exists on the remote repository (origin).
+* `--path/to/your/file.txt`: The path to the file you want to compare in your local working directory.
+
+#### Comparing the File in the Staging Area with the Remote
+If you have already staged the file (i.e., added it to the index with git add), and you want to compare the staged version of the file with the remote branch, you can do so by:
+```bash
+git diff --cached origin/main -- path/to/your/file.txt
+```
+Where
+* `--cached`: This option compares the staged (indexed) version of the file with the remote version.
+* `origin/main`: This refers to the remote branch (e.g., main on origin).
+* `path/to/your/file.txt`: Path to the file you want to compare.
+
+#### Compare with Remote File Using `git log`
+
+If you're unsure about which commit you want to compare, you can check the recent commits on the remote branch using:
+
+```bash
+git log origin/main -- path/to/your/file.txt
+```
+This will list the commit history for the specific file on the remote branch, helping you choose which commit to compare against.
+
+### Show commits not pushed
+Show commits not pushed to the remote (simple)
+```bash
+git log origin/branchname..HEAD
+```
 ## Git cheatsheet and pdf
 **Cheatsheet** 
 * [gitHub](https://education.github.com/git-cheat-sheet-education.pdf)

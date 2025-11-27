@@ -6,8 +6,8 @@ REM === YT-MP3 Downloader Script ===
 REM Downloads MP3s from YouTube with full ID3 metadata
 
 REM Set the download directory
-set "DOWNLOAD_DIR=%userprofile%\Downloads\YouTube MP3"
-rem set "DOWNLOAD_DIR=.\YouTube-MP3"
+rem set "DOWNLOAD_DIR=%userprofile%\Downloads\YouTube MP3"
+set "DOWNLOAD_DIR=.\YouTube-MP3"
 
 REM Create download folder if it doesn't exist
 if not exist "%DOWNLOAD_DIR%" (
@@ -21,6 +21,41 @@ if errorlevel 1 (
     pause
     exit /b
 )
+
+REM ===== CHOOSE IF EMBBED ID3 TAG TO OUTPUT MP3 =====
+set /p EMBBED_ID3_ENABLED="Embed ID3 metadata? [Y/n]: "
+:: Use first character only
+set "EMBBED_ID3_ENABLED=!EMBBED_ID3_ENABLED:~0,1!"
+:: default to Y if empty
+set "EMBBED_ID3_CMD=--embed-metadata --embed-thumbnail --add-metadata "
+if /I "!EMBBED_ID3_ENABLED!"=="N" (
+    set "EMBBED_ID3_CMD="
+)
+::echo ID3 embedding is set to: !EMBBED_ID3_CMD!
+
+REM ===== CHOOSE OUTPUT FILENAME FORMAT =====
+:: Display bitrate options
+echo ---------------------------------------
+echo Choose the desired filename format (default is option 1):
+echo 1. ^<title^>.^<ext^> (default)
+echo 2. ^<artist^> - ^<title^>.^<ext^>
+echo 3. ^<title^> - [^<id^>].^<ext^>
+echo 4. ^<title^> - [^<duration^>].^<ext^>
+echo 5. ^<artist^> - ^<title^> - [^<duration^>].^<ext^>
+echo ---------------------------------------
+
+:: Ask user for choice
+set /p fname_format_choice="Enter your choice (1/2/3/4) or press Enter to use the default: "
+
+:: Map the choice to the corresponding bitrate or use default (192)
+set "FNAME_FORMAT=%%(title)s.%%(ext)s"
+:: %%(artist)s - %%(title)s.%%(ext)s
+if "%fname_format_choice%"=="2" set "FNAME_FORMAT=%%(uploader)s - %%(title)s.%%(ext)s"
+if "%fname_format_choice%"=="3" set "FNAME_FORMAT=%%(title)s - [%%(id)s].%%(ext)s"
+if "%fname_format_choice%"=="4" set "FNAME_FORMAT=%%(title)s - [%%(duration_string)s].%%(ext)s"
+if "%fname_format_choice%"=="5" set "FNAME_FORMAT=%%(uploader)s - %%(title)s - [%%(duration_string)s].%%(ext)s"
+:: Inform user of the selected format
+echo Output mp3 filename has format of %FNAME_FORMAT% ...
 
 REM ===== CHOOSE BITRATE =====
 :: Display bitrate options
@@ -44,68 +79,6 @@ if "%br_choice%"=="4" set "BITRATE=256k"
 if "%br_choice%"=="5" set "BITRATE=320k"
 :: Inform user of the selected bitrate
 echo Downloading audio are all set at bitrate of %BITRATE% kbps...
-echo.
-
-:: -----------------------------
-:: Ask for quiet mode (default = Y)
-:: -----------------------------
-set "GL_QUIET=Y"
-set /p GL_QUIET="Enable quiet mode? (Y/N) [Y]: "
-
-:: Normalize input
-set "GL_QUIET=%GL_QUIET:~0,1%"
-set "GL_QUIET=%GL_QUIET:y=Y%"
-set "GL_QUIET=%GL_QUIET:n=N%"
-
-if not "%GL_QUIET%"=="N" (
-    set "GL_QUIET=Y"
-    echo Quiet mode enabled. Defaults will be used automatically.
-)
-
-echo.
-
-if /i "%GL_QUIET%"=="Y" (
-    set "EMBBED_ID3_CMD=--embed-metadata --embed-thumbnail --add-metadata "
-    set "FNAME_FORMAT=%%(title)s.%%(ext)s"
-    goto :main_menu
-)  
-    
-REM ===== CHOOSE IF EMBBED ID3 TAG TO OUTPUT MP3 =====
-set /p EMBBED_ID3_ENABLED="Embed ID3 metadata? [Y/n] (defauly Y): "
-:: Use first character only
-set "EMBBED_ID3_ENABLED=!EMBBED_ID3_ENABLED:~0,1!"
-:: default to Y if empty
-set "EMBBED_ID3_CMD=--embed-metadata --embed-thumbnail --add-metadata "
-if /I "!EMBBED_ID3_ENABLED!"=="N" (
-    set "EMBBED_ID3_CMD="
-)
-::echo ID3 embedding is set to: !EMBBED_ID3_CMD!
-
-REM ===== CHOOSE OUTPUT FILENAME FORMAT =====
-:: Display bitrate options
-echo ---------------------------------------
-echo Choose the desired filename format (default is option 1):
-echo 1. ^<title^>.^<ext^> (default)
-echo 2. ^<artist^> - ^<title^>.^<ext^>
-echo 3. ^<title^> - [^<id^>].^<ext^>
-echo 4. ^<title^> - [^<duration^>].^<ext^>
-echo 5. ^<artist^> - ^<title^> - [^<duration^>].^<ext^>
-echo ---------------------------------------
-
-:: Ask user for choice
-set /p fname_format_choice="Enter your choice (1/2/3/4) or press Enter to use the default [1]: "
-
-:: Map the choice to the corresponding bitrate or use default (192)
-set "FNAME_FORMAT=%%(title)s.%%(ext)s"
-:: %%(artist)s - %%(title)s.%%(ext)s
-if "%fname_format_choice%"=="2" set "FNAME_FORMAT=%%(uploader)s - %%(title)s.%%(ext)s"
-if "%fname_format_choice%"=="3" set "FNAME_FORMAT=%%(title)s - [%%(id)s].%%(ext)s"
-if "%fname_format_choice%"=="4" set "FNAME_FORMAT=%%(title)s - [%%(duration_string)s].%%(ext)s"
-if "%fname_format_choice%"=="5" set "FNAME_FORMAT=%%(uploader)s - %%(title)s - [%%(duration_string)s].%%(ext)s"
-:: Inform user of the selected format
-echo Output mp3 filename has format of %FNAME_FORMAT% ...
-
-echo.
 
 REM ===== MAIN MENU =====
 :main_menu
@@ -114,16 +87,11 @@ echo ---------------------------------------
 echo YouTube to MP3 Downloader
 echo ---------------------------------------
 echo Settings:
-if /i "%GL_QUIET%"=="Y" (
-    echo   Quiet mode ENABLED. Defaults will be used automatically.
-) else (
-    echo   Quiet mode DISABLED.
-)
 echo   Download Directory: "%DOWNLOAD_DIR%"
 if defined EMBBED_ID3_CMD (
-    echo   Embed ID3 Metadata: "Yes"
+    echo   Embbed ID3 Metadata: "Yes"
 ) else (
-    echo   Embed ID3 Metadata: "No"
+    echo   Embbed ID3 Metadata: "No"
 )
 echo   Filename Format: "%FNAME_FORMAT%"
 echo   Audio Bitrate: "%BITRATE%bps"
@@ -151,12 +119,6 @@ set /p VIDEO_URL="Enter YouTube video URL (or type 'e' to go back): "
 
 if /i "%VIDEO_URL%"=="e" goto :main_menu
 
-:: Check if quiet mode is enabled, set the default filename style and jump directly to download command
-if /i "%GL_QUIET%"=="Y" (
-    set "SG_ORDINAL="
-    goto :sg_download_command
-)
-
 echo [1] Use default filenames (Title.mp3) - default
 echo [2] Use indexed filenames (01 - Title.mp3)
 set /p sg_index_choice="Choose filename style (1-2): "
@@ -172,7 +134,6 @@ if "%sg_index_choice%"=="2" (
     echo SG_START_INDEX chosen = !SG_START_INDEX!
     :: Adjust for autonumber starting at 1
     set /a SG_START_INDEX=SG_START_INDEX-1
-    echo.
 
     
     rem ----------------------------
@@ -188,7 +149,6 @@ if "%sg_index_choice%"=="2" (
 rem ----------------------------
 rem Start batch download with indexing
 rem ----------------------------
-:sg_download_command
 yt-dlp -x --audio-format mp3 --audio-quality %BITRATE% ^
     !EMBBED_ID3_CMD! ^
     -o "%DOWNLOAD_DIR%\!SG_ORDINAL!!FNAME_FORMAT!" %VIDEO_URL%
@@ -212,12 +172,6 @@ if not exist "%URL_LINKS_FILE%" (
     echo ❌ File "%URL_LINKS_FILE%" not found in current directory.
     pause
     goto :main_menu
-)
-
-:: Check if quiet mode is enabled, set the default filename style and jump directly to download command
-if /i "%GL_QUIET%"=="Y" (
-    set "BA_ORDINAL="
-    goto :ba_download_command
 )
 
 :: --- Ask for filename style ---
@@ -251,7 +205,6 @@ if "%index_choice%"=="2" (
 rem ----------------------------
 rem Start batch download with indexing
 rem ----------------------------
-:ba_download_command
 yt-dlp -x --audio-format mp3 --audio-quality %BITRATE% ^
     !EMBBED_ID3_CMD! ^
     -o "%DOWNLOAD_DIR%\!BA_ORDINAL!!FNAME_FORMAT!" -a "%URL_LINKS_FILE%"
@@ -295,12 +248,6 @@ if !PL_END_INDEX! GTR 0 (
 )
 ::echo Playlist range options: !PL_RANGE_OPT!
 
-:: Check if quiet mode is enabled, set the default filename style and jump directly to download command
-if /i "%GL_QUIET%"=="Y" (
-    set "PL_ORDINAL="
-    goto :playlist_download_command
-)
-
 rem ----------------------------
 rem Ask for Padding size (number of digits for padding (3 --we have 001, 002, ...))
 rem ----------------------------
@@ -327,7 +274,6 @@ if "%pl_index_choice%"=="3" (
 :: -----------------------
 :: Download playlist
 :: -----------------------
-:playlist_download_command
 yt-dlp -x --audio-format mp3 --audio-quality %BITRATE% ^
     !EMBBED_ID3_CMD! ^
     -o "%DOWNLOAD_DIR%\!PL_ORDINAL!%%(title)s.%%(ext)s" !PL_RANGE_OPT! %PLAYLIST_URL%
@@ -348,8 +294,8 @@ REM   %2 - Default value
 REM -----------------------------------------------------
 :GetUserInputNumber
 SETLOCAL
-SET PROMPT=%~1
-SET DEFAULT=%~2
+SET PROMPT=%1
+SET DEFAULT=%2
 
 REM Prompt the user for input
 SET /P "USER_INPUT=%PROMPT% [default: %DEFAULT%]: "
@@ -363,11 +309,7 @@ IF "%USER_INPUT%"=="" (
 REM Check if the input is a valid number
 :: echo %USER_INPUT% | findstr /R "^[0-9][0-9]*$" >nul
 :: Try arithmetic to see if it's numeric, adding prefix 0 for the check to work when user inputs only alphabets such as 'abc'
-:: set /a suin_test=0%USER_INPUT% >nul 2>nul
-
-:: ^$ → matches an empty string (Enter key)
-:: Quote the entire input to prevent findstr from matching substrings
-echo "%USER_INPUT%" | findstr /R "^\"*[0-9][0-9]* *\"*$" >nul
+set /a suin_test=0%USER_INPUT% >nul 2>nul
 :: echo USER_INPUT_TEST=%suin_test%
 :: echo ERRORLEVEL=%errorlevel%
 IF errorlevel 1 (

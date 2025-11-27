@@ -23,6 +23,14 @@ If somehow `yt-dlp` fails to download mp3, you should upgrade it.
 * All downloaded MP3 from YouTube Video will be embbed withFull `ID3 Tags`
 
 ## Choose general settings
+
+### Bitrate menu
+First, you should choose the bitrate from 64kbps, 128kbps, 192kbps (default), 256kbps, 320kbps
+
+### Quiet mode
+Choose if the quiet mode, if you choose anything other than `n/N`, the programm will take that as a `Yes`, meaning you will not have to choose too many setting for each download mode. The asking for `start-index`, `padding-size`, filename `ordinal` format will be suppressed and take the default setting.
+
+Except for the `Playlist` download mode, to avoid to automatically download too many videos in a playlist, the program still ask for the `playlist-start` and `playlist-end`
 ### id3 tag
 Choose to add id3 tag to output mp3 files or not
 ### Output filename format
@@ -38,9 +46,6 @@ Choose the desired filename format (default is option 1):
 ---------------------------------------
 ```
 
-### Bitrate menu
-First, you should choose the bitrate from 64kbps, 128kbps, 192kbps (default), 256kbps, 320kbps
-
 ## Choose download mode.
 Ater choosing some general setting, we will have a menu as follows
 ```makefile
@@ -48,6 +53,7 @@ Ater choosing some general setting, we will have a menu as follows
 YouTube to MP3 Downloader
 ---------------------------------------
 Settings:
+  Quiet mode DISABLED.
   Download Directory: "C:\youtbe-MP3"
   Embed ID3 Metadata: "Yes"
   Filename Format: "%%(title)s - [%%(id)s].%%(ext)s"
