@@ -221,7 +221,7 @@ yt-dlp -x --audio-format mp3 --audio-quality 192 ^
 Explanation of Key Options:
 * `-x`: Extract audio.
 * `--audio-format mp3`: Convert to MP3.
-* `--audio-quality 192`: Audio bitrate is 192kbps. Can also use `--audio-quality 5`, where 5 is audio Medium-high quality (0 = best, 9 = worst). Full list see below
+* `--audio-quality 192`: Audio bitrate is 192kbps. Can also use `--audio-quality 5`, where 5 is audio Medium-high quality (0 = best, 9 = worst). [Full list](#mapping-of-bitrate) see below
 * `--embed-metadata`: Adds metadata (ID3 tags) like title, artist, album, etc.
 * `--embed-thumbnail`: Embeds the video's thumbnail as the album art.
 * `--add-metadata`: Adds metadata to the output filename (helpful for certain formats). Often used together with `--embed-metadata`.
