@@ -143,14 +143,14 @@ There are lots of ways to quickly specify which items you want to download, but 
 Some mote examples:
 | Syntax                  | Meaning                                                                                               |
 |-------------------------|-------------------------------------------------------------------------------------------------------|
-| `1,2,5`                 | item 1, 2, 5                                                                                          |
-| `1-3` or `1:3`          | item 1, 2, 3                                                                                          |
+| `1,2,5`                 | item 1, 2, 5`                                                                                          |
+| `1-3` or `1:3`          | item `1, 2, 3`                                                                                          |
 | `140-` or `140:`        | item 140 to the end                                                                                   |
-| `:5`                    | item 1 to 5 (note that `-5` not work)                                                    |
-| `:3:2`                  | item 1 and 3 (from 1 to 3, step 2)                                                                    |
-| `-5::2`                 | from the 5th last item to the last item, step 2 (e.g., in a 15-item playlist: items 11, 13, 15)       |
-| `::2`                   | every 2nd item starting at 1 → items 1, 3, 5... (i.e., all odd-indexed items)                         |
-| `1-3,4:5:2,140-`        | combination of the above forms, separated by commas                                                   |
+| `:5`                    | item `1, 2, 3, 4, 5` (note that `-5` not work, since it is mistaken with `minus 5`)                                                    |
+| `:3:2`                  | item `1, 3` (from 1 to 3, step 2)                                                                    |
+| `-5::2`                 | from the 5th last item to the last item, step 2 (e.g., in a 15-item playlist: items `11, 13, 15`)       |
+| `::2`                   | every 2nd item starting at 1 → items `1, 3, 5...` (i.e., all odd-indexed items)                         |
+| `1-3, 4:5:2, 140-`        | combination of the above forms, separated by commas                                                   |
 <!-- 
 ```
 `1,2,5`	item 1,2,5
@@ -162,7 +162,7 @@ Some mote examples:
 `1-3, 4:5:2, 140-`	Comprises of aabove, separeted with `,`
 ``` -->
 
-#### Choose `ordinal` for filename
+#### Choose `Ordinal` for filename
 Finally, choose the style for `ordinal` indexed number at the start of filename.
 ```makefile
 [1] Use default filenames[default]
@@ -174,17 +174,37 @@ Detailed meaning of each option as follows:
 | Option | Description  (Example with `padding size = 3`) | `yt-dlp` argument
 |--------|-------------|-------------|
 | `[1]` Use default filenames [default] | no ordinal number | use nothing |
-| `[2] Use indexed filenames (Index of the video in the playlist) | use the index of video in Playlist to be the ordinal. For example, you download item `8, 11`, the `ordinal` prefix of the file name is `008 - `, `011 -` | using the parameter `playlist_index` (numeric): Index of the video in the playlist padded with leading zeros according the final index |
+| `[2]` Use indexed filenames (Index of the video in the playlist) | use the index of video in Playlist to be the ordinal. For example, you download item `8, 11`, the `ordinal` prefix of the file name is `008 - `, `011 -` | using the parameter `playlist_index` (numeric): Index of the video in the playlist padded with leading zeros according the final index |
 | `[3]` Use indexed filenames (Position of the video in the playlist **download queue**) | Use the position of downloaded mp3 file. So the video item number 4 in playlist can be set the ordinal of '01' if it is the first items being choosen to download. For example, you download item `8, 11, 35`, the `ordinal` prefix of the file name is `001 - `, `002 -`, `003 - ` | using the parameter `playlist_autonumber` (numeric): Position of the video in the playlist download queue padded with leading zeros according to the total length of the playlist |
 
 **Choose padding size**: If you choose option [2] or [3], you have to do one more step to set the `padding size`  
 # Code customization
 ### 🎯 Set Download Directory
+#### Change Download directory
 	set "DOWNLOAD_DIR=%userprofile%\Downloads\YouTube-MP3"
 Or simply  
 
 	set "DOWNLOAD_DIR=.\YouTube-MP3"
 If the output directory not yet existed, the program will create it for you.
+
+#### Separate folders for different `Uploader` and `Playlist`
+Go to line that call `yt-dlp` which looks as follows:
+```
+yt-dlp -x --audio-format mp3 --audio-quality %BITRATE% --yes-playlist ^
+....
+```
+to replace 
+```
+%DOWNLOAD_DIR%\
+```
+with to put downloaded mp3 in corresponding foler of its `uploader`, for example `NoCopyrightSounds\`
+```
+%DOWNLOAD_DIR%\%%(uploader)s\
+```
+or with (only for `Playlist` download mode) to put downloaded mp3 into sub-folder `<uploader>\<playlist title>`, for example `NoCopyrightSounds\NCS The Best of 2025\`
+```
+%DOWNLOAD_DIR%\%%(uploader)s\%%(playlist)s\
+```
 ## Command explain
 ### Basic download command
 Most simple command:
