@@ -181,3 +181,91 @@ with open(output_file, "w", encoding="utf-8") as f:
 
 print(f"\nAll durations saved to: {output_file}")
 ```
+
+# create `input.txt`
+```
+@echo off
+setlocal enabledelayedexpansion
+
+:: Check if required arguments are passed
+if "%~4"=="" (
+    echo Usage: %0 base_url start_number end_number padding_size
+    exit /b
+)
+
+:: Get the arguments
+set baseURL=%1
+set start=%2
+set end=%3
+set paddingSize=%4
+
+:: Check if the base URL contains a wildcard (*)
+echo %baseURL% | findstr /C:"*" >nul
+if errorlevel 1 (
+    echo Error: Base URL must contain a wildcard (*) in the place of the number.
+    exit /b
+)
+
+:: Loop from start to end
+for /L %%i in (%start%, 1, %end%) do (
+    :: Get the current number and the padding size
+    set /a number=%%i
+    set "formattedNumber=%%i"
+
+    :: Check if the number length is less than the padding size, if so, pad with leading zeros
+    set "numberLength=0"
+    for /l %%j in (1,1,10) do (
+        set /a "div=%%i / 10"
+        if "!div!"=="0" (
+            goto endLoop
+        )
+        set /a "numberLength+=1"
+        set /a "i=div"
+    )
+    
+    :endLoop
+    set /a "numberLength+=1"
+
+    if !numberLength! lss %paddingSize% (
+        set "formattedNumber=000000000%%i"
+        set "formattedNumber=!formattedNumber:~-!paddingSize!"
+    )
+
+    :: Replace the wildcard in the base URL with the formatted number
+    set URL=!baseURL:*=!formattedNumber!
+    echo !URL!
+)
+
+endlocal
+pause
+```
+## Key Steps:
+Argument Parsing:  
+`%1, %2, %3, and %4` are used for the `base_url, start_number, end_number, and padding_size` respectively.
+## Padding Logic:
+We calculate the number of digits in the current  number (numberLength).
+If the number of digits is less than the specified padding size, we pad the number with leading zeros.
+The line set `"formattedNumber=000000000%%i"` ensures enough leading zeros are added before extracting the required number of digits with `!formattedNumber:~-!paddingSize!`.
+Wildcard Replacement:
+We replace the * in the base URL with the formatted number.
+## Example Usage:
+Save the batch file as generate_urls_with_padding.bat.
+Run it with the following command:
+```
+generate_urls_with_padding.bat "http://example.com/page-*" 1 141 5
+```
+## Example Output:
+For the command generate_urls_with_padding.bat `"http://example.com/page-*" 1 141 5`, the output will be:
+```
+http://example.com/page-00001
+http://example.com/page-00002
+http://example.com/page-00003
+...
+http://example.com/page-00141
+```
+**Explanation of Output:**
+* With padding size 5, numbers like 1 are padded to 00001, 2 becomes 00002, and so on.
+* For larger numbers (e.g., 141), the number isn't truncated and will be displayed as 00141 because it fits within the 5-character width.
+## Key Features:
+* Padding size is flexible. If the number is smaller than the padding size, leading zeros will be added.
+* Larger numbers (that exceed the padding size) are left intact without truncation.
