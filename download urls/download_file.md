@@ -326,3 +326,87 @@ https://example.com/page-003.html
 https://example.com/page-004.html
 https://example.com/page-005.html
 ```
+# Download with generated links
+```python
+import subprocess
+
+def generate_links(base_url, start_index, end_index, padding_size):
+    links = []
+    
+    # Iterate through the range from start_index to end_index
+    for i in range(start_index, end_index + 1):
+        # Format the index with padding
+        formatted_index = str(i).zfill(padding_size)
+        
+        # Replace '*' with the formatted index in the base URL
+        link = base_url.replace('*', formatted_index)
+        
+        # Add the generated link to the list
+        links.append(link)
+    
+    return links
+
+def download_links(links):
+    for link in links:
+        # Call curl to download the link
+        print(f"Downloading: {link}")
+        try:
+            # Using subprocess to call the curl command
+            subprocess.run(["curl", "-O", link], check=True)
+            print(f"Successfully downloaded: {link}")
+        except subprocess.CalledProcessError:
+            print(f"Failed to download: {link}")
+
+# Ask the user to input the required arguments
+base_url = input("Enter the base URL (use '*' as the placeholder for the index): ")
+start_index = int(input("Enter the starting index: "))
+end_index = int(input("Enter the ending index: "))
+padding_size = int(input("Enter the padding size (e.g., 3 for 001, 002, etc.): "))
+
+# Generate the links
+links = generate_links(base_url, start_index, end_index, padding_size)
+
+# Print the generated links
+print("\nGenerated Links:")
+for link in links:
+    print(link)
+
+# Download the generated links using curl
+download_links(links)
+```
+### Explanation:
+* `subprocess.run(["curl", "-O", link], check=True)`: This line calls the curl command to download the file from each link. The -O option tells curl to save the file with its original name (the last part of the URL).
+* Error Handling: If curl fails to download a link, the `subprocess.CalledProcessError` exception is caught, and an error message is printed.
+### Example:
+If you enter the following inputs:
+```batch
+Enter the base URL (use '*' as the placeholder for the index): https://example.com/page-*.html
+Enter the starting index: 1
+Enter the ending index: 3
+Enter the padding size (e.g., 3 for 001, 002, etc.): 3
+```
+It will generate and download:
+```
+https://example.com/page-001.html
+https://example.com/page-002.html
+https://example.com/page-003.html
+```
+### Example Output:
+```batch
+Generated Links:
+https://example.com/page-001.html
+https://example.com/page-002.html
+https://example.com/page-003.html
+
+Downloading: https://example.com/page-001.html
+Successfully downloaded: https://example.com/page-001.html
+Downloading: https://example.com/page-002.html
+Successfully downloaded: https://example.com/page-002.html
+Downloading: https://example.com/page-003.html
+Successfully downloaded: https://example.com/page-003.html
+```
+### Requirements:
+`curl` should be installed on your system. Most Linux distributions and macOS come with curl by default. For Windows, run following in command terminal:
+```
+winget install curl
+```
