@@ -183,7 +183,7 @@ print(f"\nAll durations saved to: {output_file}")
 ```
 
 # create `input.txt`
-```
+```batch
 @echo off
 setlocal enabledelayedexpansion
 
