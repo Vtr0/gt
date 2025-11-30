@@ -311,8 +311,8 @@ for link in links:
 2) The rest of the code remains the same and generates the list of links based on user input.
 ### Example Input and Output:
 #### Example Input:
-Enter the base URL (use `*` as the placeholder for the index): `https://example.com/page-*.html`
 ```batch
+Enter the base URL (use `*` as the placeholder for the index): `https://example.com/page-*.html`
 Enter the starting index: 1
 Enter the ending index: 5
 Enter the padding size (e.g., 3 for 001, 002, etc.): 3
