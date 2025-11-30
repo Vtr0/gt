@@ -269,3 +269,60 @@ http://example.com/page-00141
 ## Key Features:
 * Padding size is flexible. If the number is smaller than the padding size, leading zeros will be added.
 * Larger numbers (that exceed the padding size) are left intact without truncation.
+
+# gen links for above format
+```python
+def generate_links(base_url, start_index, end_index, padding_size):
+    links = []
+    
+    # Iterate through the range from start_index to end_index
+    for i in range(start_index, end_index + 1):
+        # Format the index with padding
+        formatted_index = str(i).zfill(padding_size)
+        
+        # Replace '*' with the formatted index in the base URL
+        link = base_url.replace('*', formatted_index)
+        
+        # Add the generated link to the list
+        links.append(link)
+    
+    return links
+
+# Ask the user to input the required arguments
+base_url = input("Enter the base URL (use '*' as the placeholder for the index): ")
+start_index = int(input("Enter the starting index: "))
+end_index = int(input("Enter the ending index: "))
+padding_size = int(input("Enter the padding size (e.g., 3 for 001, 002, etc.): "))
+
+# Generate the links
+links = generate_links(base_url, start_index, end_index, padding_size)
+
+# Print the generated links
+print("\nGenerated Links:")
+for link in links:
+    print(link)
+```
+### Explanation:
+1) input(): The program uses input() to ask the user for:
+	* `Base URL`: The URL template with * as the placeholder for the index (e.g., https://example.com/page-*.html).
+	*`Start Index`: The starting index of the range.
+	* `End Index`: The ending index of the range.
+	* `Padding Size`: The padding size for the index (e.g., 3 for 001, 002, etc.).
+2) The rest of the code remains the same and generates the list of links based on user input.
+### Example Input and Output:
+#### Example Input:
+Enter the base URL (use '*' as the placeholder for the index): `https://example.com/page-*.html`
+```batch
+Enter the starting index: 1
+Enter the ending index: 5
+Enter the padding size (e.g., 3 for 001, 002, etc.): 3
+```
+#### Example Output:
+```
+Generated Links:
+https://example.com/page-001.html
+https://example.com/page-002.html
+https://example.com/page-003.html
+https://example.com/page-004.html
+https://example.com/page-005.html
+```
