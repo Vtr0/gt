@@ -14,27 +14,30 @@ curl -L -H "User-Agent: Mozilla/5.0" -H "Referer: https://radiotruyen.me" -o "12
 
 ## Download batch urls
 Single window prompt to download a file. Note that curl can download a file even if the link preven cross-origin, even if the link does not work when paste directly into browser
+* Most simple form
 ```batch
 curl -L -H "User-Agent: Mozilla/5.0" -O "https://archive.org/download/dai-chua-te_202202/[1-70].mp3"
 ```
+* Specify output directory, specify output filename from the value in the range
 ```batch
 curl -L -H "User-Agent: Mozilla/5.0" --create-dirs --output-dir "temp-dir" -o "#1.mp3" "https://archive.org/download/dai-chua-te_202202/[1-70].mp3"
 ```
-Where:
+* Range with leading `0` (aware the range `[001-100]`, the same as we use `padding size = 3` for auto-increasing number.)
+```batch
+curl -L -H "User-Agent: Mozilla/5.0" -O "https://archive.org/download/dai-chua-te_202202/dct-[001-100].mp3"
+```
+
+**Where**:
 * `--output-dir "temp-dir"`: put downloaded files in the folder
 * `--create-dirs`: force to create folder it it not yet existed
 * `-o "#1.mp3"`: the output filenames (`#1`) will take from the wildcarted range, in this case is `[1-70]`. 
 * `[1-70]`: The range to create batch download. The range can be other form such as `[1:10:2]`, `[a-z:2]`, `{one,two,three}`
-* If you have multiple `range` in the url, the output file can do multiple replacement `#1`, `#2`,... on output filenames as example below:
+* If you have multiple `range` in the url, the output file can do multiple replacement `#1`, `#2`,... on output filenames as example below (in which, `#1` will get value from `{site,host}`, `#2` get value from the range `[1-5]`):
 ```
 curl "http://{site,host}.host[1-5].example" -o "#1_#2.htm"
 ```
 
-or with leading `0` (aware the range `[001-100]`)
-```batch
-curl -L -H "User-Agent: Mozilla/5.0" -O "https://archive.org/download/dai-chua-te_202202/dct-[001-100].mp3"
-```
-Above, we use the range `[001-100]`, the same as we use `padding size = 3` for auto-increasing number.
+
 ## Batch download and rename
 Batch file to using curl to download even if radiotruyen.me prevents cross-origin and we cannot download file directly from browser
 
