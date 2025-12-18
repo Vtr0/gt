@@ -329,4 +329,8 @@ Run file `vdl.bat` to download the video with best audio+video quality and pack 
 ```
 vdl.bat video_url
 ```
-Note that `yt_dlp` supports to download videos from lots of sites. See [Prerequisites](#-prerequisites) for the full list of supported sites.
+`video_url` should be inside a pair of double-quotes as follows:
+```
+vdl.bat "https://www.youtube.com/watch?v=81opBLfFYRg"
+```
+Note that `yt_dlp` supports to download videos from lots of sites. See [Prerequisites](#-prerequisites) for the full list of supported sites, there some interesting sites such as `VTV`, `VTVGO`, `FPTplay`, `ZingMp3`, `Vimeo`, `Twitch`, `Facebook`, `Twister`, `GoogleDrive`, `ABCnews`, `BBC`,...
