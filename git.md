@@ -1,4 +1,4 @@
-# GT
+# GIT commands
 
 
 ## Git setup

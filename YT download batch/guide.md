@@ -19,7 +19,6 @@ yt-dlp --list-extractors
 or
 ```
 yt-dlp --extractor-descriptions
-
 ```
 To find a specific site that `yt-dlp` support:
 ```
@@ -39,7 +38,7 @@ YT-DLP_GUI
 ### Troubleshoot
 If somehow `yt-dlp` fails to download mp3, you should upgrade it.
 
-# Run batch file to Download
+# Run batch file to Download Youtube to mp3
 * The batch file should be used: **`ytd.bat`**
 * All downloaded MP3 from YouTube Video will be embbed withFull `ID3 Tags`
 
@@ -324,3 +323,10 @@ Here's the typical mapping for MP3 VBR quality settings (`--audio-quality` 0 to 
 * 7	~100 kbps	Low quality
 * 8	~85 kbps	Very low quality
 * 9	~65 kbps	Lowest quality -->
+
+# Download videos
+Run file `vdl.bat` to download the video with best audio+video quality and pack into `.mkv` video file with following commands:
+```
+vdl.bat video_url
+```
+Note that `yt_dlp` supports to download videos from lots of sites. See [Prerequisites](#-prerequisites) for the full list of supported sites.
