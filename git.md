@@ -268,3 +268,42 @@ git log origin/branchname..HEAD
 ![Git scheme and corresponding basic commands](./images/git_merge_rebase_squash.jpg)
 ![Git pull scheme](./images/git_pull.jpg)
 ![Git Merge vs Rebase vs Squash](./images/git_merge_rebase_squash.jpg)
+
+# GIT COMMANDS CHEAT SHEET
+
+**Initialize & Clone**
+
+* `git init` → Create a new Git repository in the current directory
+* `git clone [repo_url]` → Copy a remote repository to your local machine
+
+**Stage & Commit**
+
+* `git add [file]` → Stage file changes (git add . = all changes)
+* `git commit -m "message"` → Save staged changes with a message
+
+**Branching**
+
+* `git branch` → List all branches
+* `git branch [branch_name]` → Create a new branch
+* `git checkout [branch_name]` → Switch to a branch
+* `git merge [branch_name]` → Merge a branch into the current one
+
+**Sync with Remote**
+
+* `git remote -v` → Show remote repositories
+* `git fetch` → Download changes (without merging)
+* `git pull` → Fetch + merge remote changes into current branch
+* `git push [remote] [branch]` → Upload local commits to remote (ex: git push origin main)
+
+**Inspect & Logs**
+
+* `git status` → Show repo status (staged/unstaged changes)
+* `git log` → View commit history
+* `git diff [file]` → Compare changes in working directory
+
+**Undo & Clean Up**
+
+* `git rm [file]` → Remove file from repo and working directory
+* `git reset [commit]` → Roll back to a specific commit (soft/mixed/hard options)
+* `git revert [commit]` → Undo a commit by creating a new one
+* `git stash` → Temporarily save changes without committing
